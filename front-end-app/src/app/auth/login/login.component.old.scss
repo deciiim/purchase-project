@@ -1,0 +1,105 @@
+.auth-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+
+  h2 { 
+    color: #4285f4;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  }
+
+  button[type="submit"] {  
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  .auth-footer { 
+    margin-top: 2rem;
+    p {
+      margin: 0.5rem 0;
+    }
+    
+    a {
+      color: #4285f4;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .social-login {
+    margin: 1.5rem 0;
+    p {
+      color: #666;
+    }
+  }
+
+  .terms {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: #666;
+    
+    a {
+      color: #4285f4;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+.password-container {
+  position: relative;
+
+  input {
+    padding-right: 40px; 
+  }
+
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 8px;
+    font-size: 1.2rem;
+    outline: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+.login-logo{
+  width: 120px;        
+  height: auto;        
+  margin-bottom: 20px; 
+  display: block;      
+  margin-left: auto;   
+  margin-right: auto;
+}

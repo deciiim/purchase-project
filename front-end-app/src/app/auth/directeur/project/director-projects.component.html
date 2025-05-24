@@ -1,0 +1,73 @@
+<div class="container">
+    <header class="page-header">
+      <h1>Projets</h1>
+      <div class="header-actions">
+        <div class="search-box">
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (input)="filterProjects()"
+            placeholder="Rechercher des projets..."
+          >
+          <i class="fas fa-search"></i>
+        </div>
+        <button class="back-button" routerLink="/directeur">
+          <i class="fas fa-arrow-left"></i>
+          Retour au Tableau de Bord
+        </button>
+      </div>
+    </header>
+  
+    <div class="stats-cards">
+      <div class="stat-card">
+        <h3>{{ totalProjects }}</h3>
+        <p>Total des Projets</p>
+      </div>
+      <div class="stat-card">
+        <h3>{{ activeProjects }}</h3>
+        <p>Projets Actifs</p>
+      </div>
+      <div class="stat-card">
+        <h3>{{ completedProjects }}</h3>
+        <p>Projets Terminés</p>
+      </div>
+    </div>
+  
+    <div class="projects-grid">
+      <div *ngFor="let project of filteredProjects" class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <h3>{{ project.title }}</h3>
+            <p class="project-id">ID Projet : {{ project.id }}</p> <!-- ✅ ID displayed here -->
+          </div>
+        </div>
+        
+        <div class="project-details">
+          <div class="detail-item">
+            <strong>Description :</strong>
+            <p>{{ project.description }}</p>
+          </div>
+          <div *ngIf="project.status === 'finished'" class="project-status finished">
+            <span class="icon"></span> Ce projet est terminé
+          </div>
+          <div *ngIf="project.status !== 'finished'" class="project-status active">
+            <span class="icon"></span> Ce projet est actif 
+          </div>
+        </div>
+  
+        <div class="project-actions">
+          <button class="btn-delete" (click)="deleteProject(project)">
+            <span class="icon"></span> Supprimer
+          </button>
+          <button *ngIf="project.status !== 'finished'" class="btn-finish" (click)="finishProject(project)">
+            <span class="icon"></span> Fin de projet
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="filteredProjects.length === 0" class="no-data">
+      Aucun projet disponible
+    </div>
+  </div>
+  

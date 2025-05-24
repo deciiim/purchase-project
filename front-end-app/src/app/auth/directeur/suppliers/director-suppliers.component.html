@@ -1,0 +1,52 @@
+<div class="container">
+    <header class="page-header">
+      <h1>Fournisseurs</h1>
+      <div class="header-actions">
+        <div class="search-box">
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (input)="filterFournisseurs()"
+            placeholder="Rechercher un fournisseur..."
+          >
+          <i class="fas fa-search"></i>
+        </div>
+        <button class="back-button" routerLink="/directeur">
+          <i class="fas fa-arrow-left"></i>
+          Retour au Tableau de Bord
+        </button>
+      </div>
+    </header>
+  
+    <div class="stats-cards">
+      <div class="stat-card">
+        <h3>{{totalFournisseurs}}</h3>
+        <p>Total Fournisseurs</p>
+      </div>
+    </div>
+  
+    <div class="fournisseurs-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Téléphone</th>
+            <th>Email</th>
+            <th>Adresse</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fournisseur of filteredFournisseurs">
+            <td>{{fournisseur.name}}</td>
+            <td>{{fournisseur.phone}}</td>
+            <td>{{fournisseur.email}}</td>
+            <td>{{fournisseur.address}}</td>
+          </tr>
+          <tr *ngIf="filteredFournisseurs.length === 0">
+            <td colspan="4" class="no-data">Aucun fournisseur trouvé</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

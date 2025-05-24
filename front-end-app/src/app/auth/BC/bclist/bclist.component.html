@@ -1,0 +1,75 @@
+<div class="bc-list-container">
+    <h1>Liste des Bons de Commande</h1>
+  
+    <div class="filters">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm"
+        (input)="applyFilters()"
+        placeholder="Rechercher par référence..." 
+        class="search-input"
+      />
+      <select [(ngModel)]="statusFilter" (change)="applyFilters()" class="status-filter">
+        <option value="all">Tous les statuts</option>
+        <option [value]="BCStatus.ISSUED">ISSUED</option>
+        <option [value]="BCStatus.RECEIVED">RECEIVED</option>
+        <option [value]="BCStatus.CANCELLED">CANCELLED</option>
+      </select>
+    </div>
+  
+    <div *ngIf="loading">Chargement...</div>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  
+    <div class="bc-cards">
+      <div class="bc-card" *ngFor="let bc of filteredBCs">
+        <div class="bc-header">
+          <div class="bc-ref">Réf: {{ bc.reference }}</div>
+          <div class="bc-date">{{ bc.date | date:'dd/MM/yyyy' }}</div>
+        </div>
+  
+        <div class="bc-body">
+          <div class="bc-info">
+            <div class="info-group">
+                <label>Fournisseur ID:</label>
+                <span>{{ bc.fournisseur?.id }}</span>
+              </div>
+              
+              <div class="info-group">
+                <label>Demande d'achat ID:</label>
+                <span>{{ bc.demandeAchat?.id }}</span>
+              </div>
+              
+              <div class="info-group">
+                <label>Projet ID:</label>
+                <span>{{ bc.demandeProjet?.id }}</span>
+              </div>
+              
+  
+            <div class="info-group">
+              <label>Montant Total:</label>
+              <span class="montant">{{ bc.montantTotal }} DH</span>
+            </div>
+  
+            <div class="info-group">
+              <label>Statut:</label>
+              <span class="status">{{ bc.status }}</span>
+            </div>
+  
+            <div class="status-buttons" *ngIf="bc.status === BCStatus.ISSUED">
+              <button (click)="updateStatus(bc, BCStatus.RECEIVED)" class="btn-received">
+                RECEIVED
+              </button>
+              <button (click)="updateStatus(bc, BCStatus.CANCELLED)" class="btn-cancelled">
+                CANCELLED
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="!loading && filteredBCs.length === 0" class="no-data">
+      Aucun bon de commande trouvé
+    </div>
+  </div>
+  

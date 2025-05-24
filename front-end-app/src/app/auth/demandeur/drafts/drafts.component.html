@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="header">
+      <h2>Mes Brouillons</h2>
+    </div>
+
+    <div class="drafts-container">
+      <div *ngIf="drafts.length === 0" class="no-drafts">
+        Aucun brouillon sauvegardé.
+      </div>
+
+      <div *ngFor="let draft of drafts" class="draft-card">
+        <div class="draft-header">
+          <span class="draft-number">Request #{{ draft.requestNumber }}</span>
+          <span class="draft-date">{{ draft.date | date:'dd/MM/yyyy' }}</span>
+        </div>
+        
+        <div class="draft-content">
+          <div class="draft-detail">
+            <strong>Quantité:</strong> {{ draft.qte }}
+          </div>
+          <div class="draft-detail">
+            <strong>Description:</strong>
+            <p class="description">{{ draft.details }}</p>
+          </div>
+        </div>
+
+        <div class="draft-actions">
+          <button class="btn btn-edit" (click)="editDraft(draft)">
+            Modifier
+          </button>
+          <button class="btn btn-delete" (click)="deleteDraft(draft.requestNumber)">
+            Supprimer
+          </button>
+          <button class="btn btn-submit" (click)="submitDraft(draft)">
+            Soumettre
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

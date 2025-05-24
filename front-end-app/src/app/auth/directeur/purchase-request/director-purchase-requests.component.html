@@ -1,0 +1,101 @@
+<div class="container">
+    <header class="page-header">
+      <h1>Demandes d'Achat</h1>
+      <div class="header-actions">
+        <div class="search-box">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            placeholder="Rechercher des demandes..."
+          />
+          <i class="fas fa-search"></i>
+        </div>
+      
+        <div class="status-filter-box">
+          <select [(ngModel)]="statusFilter" class="status-filter">
+            <option value="all">Tous les statuts</option>
+            <option value="pending">En attente</option>
+            <option value="approved">Approuvée</option>
+            <option value="rejected">Rejetée</option>
+          </select>
+        </div>
+      
+        <button class="back-button" routerLink="/directeur">
+          <i class="fas fa-arrow-left"></i>
+          Retour au Tableau de Bord
+        </button>
+      </div>
+      
+    </header>
+  
+    <div class="stats-cards">
+      <div class="stat-card">
+        <h3>{{ totalRequests }}</h3>
+        <p>Total des Demandes</p>
+      </div>
+      <div class="stat-card">
+        <h3>{{ pendingRequests }}</h3>
+        <p>En Attente</p>
+      </div>
+      <div class="stat-card">
+        <h3>{{ approvedRequests }}</h3>
+        <p>Approuvées</p>
+      </div>
+      <div class="stat-card">
+        <h3>{{ rejectedRequests }}</h3>
+        <p>Rejetées</p>
+      </div>
+    </div>
+  
+    <div class="content">
+      <div class="requests-list">
+        <div *ngFor="let request of getFilteredRequests()" class="request-card">
+          <div class="request-header">
+            <h3>Demande #{{ request.requestNumber }}</h3>
+            <span class="request-user">Demandeur : {{ request.username }}</span>
+            <span class="status-badge" [ngClass]="request.status.toLowerCase()">
+              {{ getStatusLabel(request.status) }}
+            </span>
+          </div>
+  
+          <div class="request-details">
+            <div class="detail-row">
+              <div class="detail-group">
+                <label>Quantité :</label>
+                <p>{{ request.qte }}</p>
+              </div>
+              <div class="detail-group">
+                <label>Date :</label>
+                <p>{{ request.date | date: 'dd/MM/yyyy HH:mm' }}</p>
+              </div>
+            </div>
+            <div class="detail-group full-width">
+              <label>Détails :</label>
+              <p>{{ request.details }}</p>
+            </div>
+          </div>
+  
+          <div class="request-actions" *ngIf="request.status === 'PENDING'">
+            <button class="approve-button" (click)="approveRequest(request)">
+              <i class="fas fa-check"></i> Approuver
+            </button>
+            <button class="reject-button" (click)="rejectRequest(request)">
+              <i class="fas fa-times"></i> Rejeter
+            </button>
+          </div>
+          <div class="request-actions">
+            <button class="btn-delete" (click)="deleteRequest(request)">
+              <i class="fas fa-trash"></i> Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="pagination" *ngIf="totalPages > 1">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">Précédent</button>
+        <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Suivant</button>
+      </div>
+    </div>
+  </div>
+  

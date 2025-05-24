@@ -1,0 +1,57 @@
+<div class="projects-container">
+  <div class="header">
+    <h2>Mes Demandes de Projet</h2>
+    <div class="actions">
+      <button class="create-button" (click)="createNewRequest()">
+        Nouvelle Demande
+      </button>
+      <button class="home-button" (click)="goToHome()">Home</button>
+    </div>
+  </div>
+
+  <div class="stats-cards">
+    <div class="stat-card">
+      <h3>{{ totalDemandes }}</h3>
+      <p>Total Demandes</p>
+    </div>
+  </div>
+
+  <div class="projects-grid">
+    <div *ngFor="let demande of demandesProjets" class="project-card">
+      <div class="project-header">
+        <div class="project-title">
+          <h3>{{ demande.name }}</h3>
+          <p class="project-date">
+            {{ demande.created_at | date: 'dd MMM yyyy' }}
+          </p>
+        </div>
+      </div>
+
+      <div class="project-details">
+        <div class="detail-item">
+          <strong>Description:</strong>
+          <span>{{ demande.description }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Demande d'achat ID:</strong>
+          <span>{{ demande.demandeAchat?.id }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Projet ID:</strong>
+          <span>{{ demande.projet?.id }}</span>
+        </div>
+      </div>
+
+      <div class="request-actions">
+        <button class="delete-button" (click)="deleteDemande(demande)">
+          <i class="fas fa-trash"></i>
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="demandesProjets.length === 0" class="no-data">
+    Aucune demande de projet disponible
+  </div>
+</div>

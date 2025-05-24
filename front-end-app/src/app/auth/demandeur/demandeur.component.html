@@ -1,0 +1,78 @@
+<div class="app-container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">
+        <h1>Target</h1>
+        <h2>Metal Works</h2>
+      </div>
+    </div>
+    <nav>
+      <h4>Découvrir</h4>
+      <ul>
+        <li><a routerLink="/demandeur" routerLinkActive="active">🏠 Accueil</a></li>
+      </ul>
+      <h4>Demandes d'Achat</h4>
+      <ul>
+        <li><a routerLink="/purchases" routerLinkActive="active">🛒 Toutes les demandes</a></li>
+        <li><a routerLink="/drafts" routerLinkActive="active">📝 Brouillons</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="header">
+      <div class="date">📅 {{ currentDate | date: 'dd/MM/yyyy' }}</div>
+      <div class="account">
+        <div class="account-link" style="cursor: pointer;" (click)="goToProfile()">
+          👤 <span class="username">{{ username }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <h1 class="page-title">Nouvelle Demande d'Achat</h1>
+      <p class="welcome-message">Bienvenue, {{ username }} !</p>
+
+      <form class="request-form" (ngSubmit)="submitRequest()" #requestForm="ngForm">
+        <div class="form-header">
+          <span class="request-info">Demande N° : {{ requestNumber }}</span>
+          <span class="date-info">Date : {{ currentDate | date: 'dd/MM/yyyy' }}</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group quantity-field">
+            <label for="quantity">Quantité :</label>
+            <input
+              type="number"
+              id="quantity"
+              [(ngModel)]="request.qte"
+              name="qte"
+              min="1"
+              (input)="validateQuantity($event)"
+              placeholder="Saisissez la quantité"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="details">Description :</label>
+            <textarea
+              id="details"
+              [(ngModel)]="request.details"
+              name="details"
+              placeholder="Saisissez une description détaillée de votre demande..."
+              required></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="saveAsDraft()">
+            Enregistrer comme brouillon
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="!requestForm.form.valid">
+            Soumettre la demande
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>

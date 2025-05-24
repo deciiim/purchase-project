@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="sidebar">
+      <h1>Target Metal Works</h1>
+  
+      <h2>Discover</h2>
+      <ul>
+        <li>
+          <span class="nav-link home" (click)="goToHome()">
+            Home
+          </span>
+        </li>
+      </ul>
+  
+      <h2>Projects</h2>
+      <ul>
+        <li>
+          <span class="nav-link create" (click)="goToCreateProject()">
+            Create Project
+          </span>
+        </li>
+      </ul>
+  
+      <div class="date">{{ today | date: 'dd/MM/yyyy' }}</div>
+    </div>
+  
+    <div class="main-content">
+      <h1>LISTE DES PROJETS</h1>
+  
+      <div class="stats-cards">
+        <div class="stat-card">
+          <h3>{{ totalProjects }}</h3>
+          <p>Total Projets</p>
+        </div>
+        <div class="stat-card">
+          <h3>{{ activeProjects }}</h3>
+          <p>Projets Actifs</p>
+        </div>
+        <div class="stat-card">
+          <h3>{{ completedProjects }}</h3>
+          <p>Projets Terminés</p>
+        </div>
+      </div>
+  
+      <div class="search-bar">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Rechercher un projet..."
+          (input)="filterProjects()"
+        >
+      </div>
+  
+      <div class="projects-grid">
+        <div *ngFor="let project of filteredProjects" class="project-card">
+          <div class="project-header">
+            <div class="project-title">
+              <h3>{{ project.title }}</h3>
+              <p class="project-id">ID Projet : {{ project.id }}</p> <!-- ✅ Project ID displayed -->
+            </div>
+            
+          </div>
+          <div class="project-details">
+            <div class="detail-item">
+              <strong>Description :</strong>
+              <p>{{ project.description }}</p>
+            </div>
+            <div *ngIf="project.status === 'finished'" class="project-status finished">
+              <span class="icon"></span> Ce projet est terminé
+            </div>
+            <div *ngIf="project.status !== 'finished'" class="project-status active">
+              <span class="icon"></span> Ce projet est actif
+            </div>
+          </div>
+          <div class="project-actions">
+            <button class="btn-delete" (click)="deleteProject(project)">
+              <span class="icon"></span> Supprimer
+            </button>
+            <button *ngIf="project.status !== 'finished'" class="btn-finish" (click)="finishProject(project)">
+              <span class="icon"></span> Fin de projet
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="filteredProjects.length === 0" class="no-data">
+        Aucun projet trouvé
+      </div>
+    </div>
+  </div>
+  

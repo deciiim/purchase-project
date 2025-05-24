@@ -1,0 +1,116 @@
+<div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <h2>Target Metal Works</h2>
+      </div>
+      
+      <div class="menu-section">
+        <h3>DÉCOUVRIR</h3>
+        <ul>
+          <li>
+            <a class="nav-link" routerLink="/directeur">
+              <i class="fas fa-home"></i>
+              Accueil
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="menu-section">
+        <h3>GESTION</h3>
+        <ul>
+          <li>
+            <a class="nav-link" routerLink="/directeur/purchase-requests">
+              <i class="fas fa-list"></i>
+              Toutes les Demandes d'achats
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" (click)="goToProjectRequests()">
+              <i class="fas fa-project-diagram"></i>
+              Toutes les Demandes de Projets
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/directeur/projects">
+              <i class="fas fa-tasks"></i>
+              Tous les Projets
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/directeur/suppliers">
+              <i class="fas fa-users"></i>
+              Tous les Fournisseurs
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/directeur/bclist">
+              <i class="fas fa-file-invoice"></i>
+              Tous lesBons de Commande
+            </a>
+           </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-bar">
+            <div class="date">{{ today | date:'dd/MM/yyyy' }}</div>
+            <div class="profile-link" (click)="goToProfile()" style="cursor: pointer;">
+              <i class="fas fa-user"></i>
+              <span class="user-info">{{ username }}</span>
+            </div>
+          </header>
+          
+          <div class="content">
+            <div class="welcome-text">Bienvenue M / Mme {{ username }}</div>
+    
+        
+        <h2 class="page-title">ACCUEIL :</h2>
+
+        <div class="cards-grid">
+          <!-- All Cards in One Row -->
+          <div class="card-row">
+            <div class="card">
+              <h3>Dernières Demandes</h3>
+              <p class="card-description">Voir toutes les demandes d'achat récentes</p>
+              <button routerLink="/directeur/purchase-requests" class="action-button">
+                <i class="fas fa-eye"></i>
+                CONSULTER
+              </button>
+            </div>
+
+            <div class="card">
+              <h3>Projets</h3>
+              <p class="card-description">Gérer tous les projets</p>
+              <button routerLink="/directeur/projects" class="action-button">
+                <i class="fas fa-tasks"></i>
+                VOIR PROJETS
+              </button>
+            </div>
+
+            <div class="card">
+              <h3>Demandes de Projets</h3>
+              <p class="card-description">Gérer les demandes de projets</p>
+              <button (click)="goToProjectRequests()" class="action-button">
+                <i class="fas fa-project-diagram"></i>
+                VOIR DEMANDES
+              </button>
+            </div>
+
+            <div class="card">
+              <h3>Fournisseurs</h3>
+              <p class="card-description">Voir la liste des fournisseurs</p>
+              <button routerLink="/directeur/suppliers" class="action-button">
+                <i class="fas fa-users"></i>
+                VOIR FOURNISSEURS
+              </button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>

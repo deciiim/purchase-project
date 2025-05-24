@@ -1,0 +1,51 @@
+<div class="profile-container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar">
+          <img src="assets/target.png" alt="Target Metal Works Logo" class="logo-image">
+        </div>
+        <h1>{{name || 'Profil Responsable'}}</h1>
+      </div>
+
+      <div class="profile-content">
+        <div class="form-group">
+          <label>
+            <i class="fas fa-user"></i>
+            Nom Complet
+          </label>
+          <input 
+            type="text" 
+            [(ngModel)]="name" 
+            (ngModelChange)="updateProfile()"
+            placeholder="Entrez votre nom complet"
+            class="form-control"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>
+            <i class="fas fa-envelope"></i>
+            Adresse Email
+          </label>
+          <input 
+            type="email" 
+            [(ngModel)]="email" 
+            (ngModelChange)="updateProfile()"
+            placeholder="Entrez votre email"
+            class="form-control"
+          >
+        </div>
+
+        <div class="profile-actions">
+          <button class="btn btn-back" (click)="goBack()">
+            <i class="fas fa-arrow-left"></i>
+            Retour
+          </button>
+          <button class="btn btn-logout" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Se Déconnecter
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

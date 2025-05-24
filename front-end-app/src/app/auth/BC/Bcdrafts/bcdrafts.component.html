@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="header">
+    <h2>Brouillons des Bons de Commande</h2>
+    <div class="search-section">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Rechercher un brouillon..."
+        class="search-input"
+      >
+      <i class="search-icon">🔍</i>
+    </div>
+  </div>
+
+  <div class="drafts-list">
+    <div *ngIf="drafts.length === 0" class="no-drafts">
+      <i class="empty-icon">📋</i>
+      <p>Aucun brouillon sauvegardé</p>
+    </div>
+
+    <div *ngFor="let draft of filteredDrafts" class="draft-item">
+      <div class="draft-header">
+        <div class="draft-title">
+          <span class="draft-reference">Réf: {{ draft.reference }}</span>
+          <span class="draft-date">{{ draft.date | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="draft-status">Brouillon</div>
+      </div>
+      
+      <div class="draft-content">
+        <div class="info-group">
+          <div class="info-item">
+            <label>Fournisseur ID:</label>
+            <span>{{ draft.fournisseurId }}</span>
+          </div>
+          <div class="info-item">
+            <label>Demande d'achat ID:</label>
+            <span>{{ draft.demandeAchatId }}</span>
+          </div>
+        </div>
+        
+        <div class="info-group">
+          <div class="info-item">
+            <label>Projet ID:</label>
+            <span>{{ draft.projetId }}</span>
+          </div>
+          <div class="info-item">
+            <label>Montant Total:</label>
+            <span class="montant">{{ draft.montantTotal }} DH</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="draft-actions">
+        <button class="btn btn-edit" (click)="editDraft(draft)">
+          <i class="icon">✏️</i> Modifier
+        </button>
+        <button class="btn btn-delete" (click)="deleteDraft(draft.reference)">
+          <i class="icon">🗑️</i> Supprimer
+        </button>
+        <button class="btn btn-save" (click)="saveOrder(draft)">
+          <i class="icon">💾</i> Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="message" [class]="'alert ' + messageType">
+    {{ message }}
+  </div>
+</div>
+

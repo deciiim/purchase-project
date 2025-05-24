@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="sidebar">
+      <h1>Target Metal Works</h1>
+      
+      <h2>Discover</h2>
+      <ul>
+        <li>
+          <span class="nav-link home" (click)="goToHome()">
+            Home
+          </span>
+        </li>
+      </ul>
+      
+      <h2>Demandes</h2>
+      <ul>
+        <li>
+          <span class="nav-link create" (click)="goToCreate()">
+            Create Demande
+          </span>
+        </li>
+      </ul>
+      
+      <div class="date">{{currentDate | date:'dd/MM/yyyy'}}</div>
+    </div>
+
+    <div class="main-content">
+      <h1>BROUILLONS DES DEMANDES DE PROJET</h1>
+      
+      <div class="form-section">
+        <div *ngIf="drafts.length === 0" class="no-drafts">
+          Aucun brouillon sauvegardé.
+        </div>
+
+        <div *ngFor="let draft of drafts" class="draft-card">
+          <div class="draft-header">
+            <span class="draft-name">{{ draft.name }}</span>
+            <span class="draft-date">{{ draft.date | date:'dd/MM/yyyy' }}</span>
+          </div>
+          
+          <div class="draft-content">
+            <div class="draft-detail">
+              <strong>Demande d'achat ID:</strong> {{ draft.demandeAchatId }}
+            </div>
+            <div class="draft-detail">
+              <strong>Projet ID:</strong> {{ draft.projetId }}
+            </div>
+            <div class="draft-detail">
+              <strong>Description:</strong>
+              <p class="description">{{ draft.description }}</p>
+            </div>
+          </div>
+
+          <div class="draft-actions">
+            <button class="action-btn edit" (click)="editDraft(draft)">
+              Modifier
+            </button>
+            <button class="action-btn delete" (click)="deleteDraft(draft)">
+              Supprimer
+            </button>
+            <button class="action-btn submit" (click)="submitDraft(draft)">
+              Soumettre
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

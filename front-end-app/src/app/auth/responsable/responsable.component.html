@@ -1,0 +1,90 @@
+<div class="layout">
+    <aside class="sidebar">
+      <h2>Target Metal Works</h2>
+      <nav>
+        <h3>Découvrir</h3>
+        <ul>
+          <li><span class="nav-link" (click)="goToHome()">Accueil</span></li>
+        </ul>
+  
+        <h3>Gestions</h3>
+        <ul>
+          <li><span class="nav-link" (click)="goToPurchases()">Toutes les demandes d'achats</span></li>
+          <li><span class="nav-link" (click)="goToBCList()">Tous les Bons de Commande</span></li>
+          <li><span class="nav-link" (click)="goToProjectList()">Tous les Projets</span></li>
+          <li><span class="nav-link" (click)="goToDemandeProjetList()">Toutes les Demandes de Projet</span></li>
+        </ul>
+  
+        <h3>FOURNISSEUR</h3>
+        <ul>
+          <li><span class="nav-link" (click)="goToFournisseurs()">Tous les Fournisseurs</span></li>
+        </ul>
+      </nav>
+    </aside>
+  
+    <main class="main-content">
+      <div class="header">
+        <span class="date">{{ today | date: 'dd/MM/yyyy' }}</span>
+        <div class="account">
+          <div class="account-link" (click)="goToProfile()">
+            <span style="font-size: 20px;">👤</span>
+            <span class="user-info">{{ username }}</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="welcome">
+        <p>Bienvenue M / Mme: {{ username }}</p>
+        
+        <h2>ACCUEIL :</h2>
+  
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Dernières Demandes</h3>
+            <p class="card-description">Consulter les demandes récentes</p>
+            <button class="action-button" (click)="goToLatestRequests()">
+              <i class="fas fa-eye"></i>
+              CONSULTER
+            </button>
+          </div>
+
+          <div class="card">
+            <h3>Bon de Commande</h3>
+            <p class="card-description">Créer un nouveau bon de commande</p>
+            <button class="action-button" (click)="goToCreateBC()">
+              <i class="fas fa-plus"></i>
+              CRÉER
+            </button>
+          </div>
+
+          <div class="card">
+            <h3>Projet</h3>
+            <p class="card-description">Créer un nouveau projet</p>
+            <button class="action-button" (click)="goToCreatePro()">
+              <i class="fas fa-project-diagram"></i>
+              CRÉER
+            </button>
+          </div>
+
+          <div class="card">
+            <h3>Demande de Projet</h3>
+            <p class="card-description">Créer une nouvelle demande de projet</p>
+            <button class="action-button" (click)="goToCreateDemandeProjet()">
+              <i class="fas fa-file-alt"></i>
+              CRÉER
+            </button>
+          </div>
+
+          <div class="card">
+            <h3>Fournisseur</h3>
+            <p class="card-description">Ajouter un nouveau fournisseur</p>
+            <button class="action-button" (click)="goToAddFournisseur()">
+              <i class="fas fa-user-plus"></i>
+              AJOUTER
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  

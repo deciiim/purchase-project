@@ -1,0 +1,59 @@
+<div class="container">
+    <h2>Liste des Achats</h2>
+  
+    <div class="search-section">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Rechercher un achat..."
+        class="search-input"
+      >
+    </div>
+  
+    <div *ngIf="loading">Chargement des achats...</div>
+    <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+  
+    <div class="purchases-list" *ngIf="!loading && purchases.length === 0">
+      Aucun achat enregistré.
+    </div>
+  
+    <div *ngFor="let purchase of filteredPurchases" class="purchase-item">
+      <div class="purchase-header">
+        <div class="purchase-title">
+          <span class="purchase-id">ID: {{ purchase.requestNumber }}</span>
+          <span class="purchase-user">Demandeur : {{ purchase.username || 'N/A' }}</span>
+          <span class="purchase-status" [ngClass]="purchase.status">
+            {{ getStatusLabel(purchase.status) }}
+          </span>
+        </div>
+        <span class="purchase-date">{{ purchase.date | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      
+      <div class="purchase-details">
+        <div class="detail-row">
+          <div class="detail-group">
+            <label>Quantité:</label>
+            <span>{{ purchase.qte }}</span>
+          </div>
+          <div class="detail-group">
+            <label>Description:</label>
+            <span>{{ purchase.details }}</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="purchase-actions">
+        <button class="btn-delete" (click)="deletePurchase(purchase)">
+           Supprimer
+        </button>
+      </div>
+    </div>
+  
+    <!-- Pagination Controls -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Précédent</button>
+      <span>Page {{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Suivant</button>
+    </div>
+  </div>
+  

@@ -1,0 +1,99 @@
+<div class="requests-container">
+
+  <div class="stats-cards">
+    <div class="stat-card">
+      <h2>{{ totalRequests }}</h2>
+      <p>Total Demandes</p>
+    </div>
+    <div class="stat-card">
+      <h2>{{ pendingRequests }}</h2>
+      <p>En Attente</p>
+    </div>
+    <div class="stat-card">
+      <h2>{{ approvedRequests }}</h2>
+      <p>Approuvées</p>
+    </div>
+    <div class="stat-card">
+      <h2>{{ rejectedRequests }}</h2>
+      <p>Rejetées</p>
+    </div>
+  </div>
+
+  <div class="filters">
+    <input 
+      type="text" 
+      placeholder="Rechercher une demande..." 
+      class="search-input"
+      [(ngModel)]="searchTerm"
+    >
+    <select [(ngModel)]="statusFilter" class="status-filter">
+      <option value="all">Tous les statuts</option>
+      <option value="pending">En attente</option>
+      <option value="approved">Approuvée</option>
+      <option value="rejected">Rejetée</option>
+    </select>
+  </div>
+
+  <div *ngIf="loading" class="loading-indicator">
+    Chargement en cours...
+  </div>
+
+  <div *ngIf="errorMsg" class="error-message">
+    {{ errorMsg }}
+  </div>
+
+  <div class="request-cards" *ngIf="!loading && !errorMsg">
+    <div class="request-card" *ngFor="let request of getFilteredRequests()">
+      <div class="request-header">
+        <div class="request-id">
+          <span class="label">#{{ request.requestNumber }}</span>
+          <span class="request-user">Demandeur : {{ request.username || 'N/A' }}</span>
+          <span class="date">{{ request.date | date:'dd MMM yyyy' }}</span>
+        </div>
+        <div [class]="'status-badge status-' + request.status.toLowerCase()">
+          {{ getStatusLabel(request.status) }}
+        </div>
+      </div>
+
+      <div class="request-body">
+        <div class="info-row">
+          <label>Description:</label>
+          <span>{{ request.details }}</span>
+        </div>
+        <div class="info-row">
+          <label>Quantité:</label>
+          <span>{{ request.qte }}</span>
+        </div>
+      </div>
+
+      <div class="request-actions">
+        <ng-container *ngIf="request.status === 'PENDING'">
+          <button class="btn-approve" (click)="approveRequest(request)">
+            ✓ Approuver
+          </button>
+          <button class="btn-reject" (click)="rejectRequest(request)">
+            ✕ Rejeter
+          </button>
+        </ng-container>
+        <ng-container *ngIf="request.status === 'APPROVED' || request.status === 'REJECTED'">
+          <button class="btn-delete" (click)="deleteRequest(request)">
+             Supprimer
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !errorMsg && getFilteredRequests().length === 0" class="no-data">
+    Aucune demande disponible
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-controls" *ngIf="totalPages > 1">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Précédent</button>
+    <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="!isCurrentPageFull || currentPage === totalPages">Suivant</button>
+
+  </div>
+
+</div>

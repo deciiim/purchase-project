@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="sidebar">
+      <h1>Target Metal Works</h1>
+      
+      <h2>Discover</h2>
+      <ul>
+        <li>
+          <span class="nav-link home" (click)="goToHome()">
+            Home
+          </span>
+        </li>
+      </ul>
+      
+      <h2>Fournisseurs</h2>
+      <ul>
+        <li>
+          <span class="nav-link add" (click)="goToAddFournisseur()">
+            Add Fournisseur
+          </span>
+        </li>
+      </ul>
+      
+      <div class="date">{{currentDate | date:'dd/MM/yyyy'}}</div>
+    </div>
+
+    <div class="main-content">
+      <h1>LISTE DES FOURNISSEURS</h1>
+      
+      <div class="form-section">
+        <div class="search-bar">
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            placeholder="Rechercher un fournisseur..."
+            (input)="filterFournisseurs()"
+          >
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Téléphone</th>
+              <th>Email</th>
+              <th>Adresse</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let fournisseur of filteredFournisseurs">
+              <td>{{ fournisseur.name }}</td>
+              <td>{{ fournisseur.phone }}</td>
+              <td>{{ fournisseur.email }}</td>
+              <td class="address-cell">{{ fournisseur.address }}</td>
+              <td>{{ fournisseur.date | date:'dd/MM/yyyy' }}</td>
+              <td class="actions">
+                <button class="action-btn edit" (click)="editFournisseur(fournisseur)">
+                  Modifier
+                </button>
+                <button class="action-btn delete" (click)="deleteFournisseur(fournisseur)">
+                  Supprimer
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="filteredFournisseurs.length === 0">
+              <td colspan="6" class="no-data">Aucun fournisseur trouvé</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

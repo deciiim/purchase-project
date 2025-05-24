@@ -1,0 +1,52 @@
+<div class="container">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h1>Target Metal Works</h1>
+  
+      <h2>Discover</h2>
+      <ul>
+        <li>
+          <span class="nav-link home" (click)="goToHome()">
+            Home
+          </span>
+        </li>
+      </ul>
+  
+      <div class="date">{{currentDate | date:'dd/MM/yyyy'}}</div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="header">
+        <h1>LISTE DES PROJETS</h1>
+        <div class="search-box">
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            placeholder="Rechercher un projet..."
+            (input)="filterProjects()"
+          >
+        </div>
+      </div>
+
+      <div class="projects-grid">
+        <div *ngFor="let project of filteredProjects" class="project-card">
+          <div class="project-header">
+            <h3>{{ project.name }}</h3>
+            <span class="date">{{ project.date | date:'dd/MM/yyyy' }}</span>
+          </div>
+          
+          <div class="project-details">
+            <div class="detail-row">
+              <strong>Description:</strong>
+              <p>{{ project.description }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="filteredProjects.length === 0" class="no-projects">
+          Aucun projet trouvé
+        </div>
+      </div>
+    </div>
+  </div>

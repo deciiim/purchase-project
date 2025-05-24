@@ -1,0 +1,66 @@
+<div class="container">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h1>Target Metal Works</h1>
+
+    <h2>Découvrir</h2>
+    <ul>
+      <li>
+        <span class="nav-link home" (click)="goToHome()">
+          Accueil
+        </span>
+      </li>
+    </ul>
+
+    <h2>Projets</h2>
+    <ul>
+      <li>
+        <span class="nav-link all" (click)="goToProjects()">
+          Tous les Projets
+        </span>
+      </li>
+    </ul>
+
+    <div class="date">{{ today | date: 'dd/MM/yyyy' }}</div>
+    <div class="welcome">Bienvenue M / Mme</div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <h1>CRÉATION DE PROJET</h1>
+
+    <div class="form-section">
+      <table class="form-table">
+        <tr>
+          <th>Titre du projet</th>
+          <th>Date</th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" [(ngModel)]="project.title" placeholder="Entrez le titre" />
+          </td>
+          <td>{{ today | date: 'dd/MM/yyyy' }}</td>
+        </tr>
+      </table>
+
+      <table class="data-table">
+        <tr>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>
+            <textarea
+              [(ngModel)]="project.description"
+              placeholder="Entrez la description du projet"
+              rows="4"
+            ></textarea>
+          </td>
+        </tr>
+      </table>
+
+      <div class="button-group">
+        <button class="save-btn draft" (click)="saveProject()">ENREGISTRER</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="sidebar">
+      <h1>Target Metal Works</h1>
+  
+      <h2>Découvrir</h2>
+      <ul>
+        <li><span class="nav-link home" (click)="goToHome()">Accueil</span></li>
+      </ul>
+  
+      <h2>Demandes</h2>
+      <ul>
+        <li><span class="nav-link all" (click)="goToList()">Toutes les Demandes</span></li>
+        <li><span class="nav-link drafts" (click)="goToDrafts()">Brouillons</span></li>
+      </ul>
+  
+      <div class="date">{{ currentDate | date:'dd/MM/yyyy' }}</div>
+      <div class="welcome">Bienvenue M / Mme</div>
+    </div>
+  
+    <div class="main-content">
+      <h1>CRÉATION DEMANDE DE PROJET</h1>
+  
+      <div class="form-section">
+        <table class="form-table">
+          <tr>
+            <th>Nom du Projet</th>
+            <th>Date</th>
+          </tr>
+          <tr>
+            <td><input type="text" [(ngModel)]="demande.name" placeholder="Entrez le nom du projet" /></td>
+            <td>{{ currentDate | date:'dd/MM/yyyy' }}</td>
+          </tr>
+        </table>
+  
+        <table class="data-table">
+          <tr>
+            <th>ID Demande d'achat</th>
+            <th>ID Projet</th>
+          </tr>
+          <tr>
+            <td><input type="text" [(ngModel)]="demande.demandeAchatId" placeholder="Entrez l'ID de la demande d'achat" /></td>
+            <td><input type="text" [(ngModel)]="demande.projetId" placeholder="Entrez l'ID du projet" /></td>
+          </tr>
+        </table>
+  
+        <table class="data-table">
+          <tr><th>Description</th></tr>
+          <tr>
+            <td>
+              <textarea
+                [(ngModel)]="demande.description"
+                placeholder="Entrez la description détaillée du projet"
+                rows="4"
+              ></textarea>
+            </td>
+          </tr>
+        </table>
+  
+        <div class="button-group">
+          <button class="save-btn draft" (click)="saveAsDraft()">ENREGISTRER COMME BROUILLON</button>
+          <button class="save-btn final" (click)="saveDemande()">ENREGISTRER</button>
+        </div>
+  
+        <!-- Message box like your example -->
+        <div *ngIf="message" [ngClass]="['message-box', messageType]">
+          {{ message }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
