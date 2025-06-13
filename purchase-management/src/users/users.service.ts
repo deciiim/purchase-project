@@ -1,9 +1,12 @@
+// FILE: src/users/users.service.ts
+
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
-import { EmailService } from './email.service'; // Import the EmailService
+
+// The import for the old EmailService has been removed.
 
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,7 +18,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly repo: Repository<User>,
-    private readonly emailService: EmailService, // Inject the EmailService
+    // The dependency on the old EmailService has been removed from the constructor.
   ) {}
 
   async create(dto: CreateUserDto): Promise<User> {
@@ -65,23 +68,20 @@ export class UsersService {
     }
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<User | null> {
     if (!email) {
-      throw new HttpException('You must insert an email', HttpStatus.BAD_REQUEST);
+      return null;
     }
-
-    const user = await this.repo.findOne({ where: { email } });
-
-    if (!user) {
-      throw new HttpException('Email does not exist', HttpStatus.NOT_FOUND);
-    }
-
-    return user;
+    return this.repo.findOne({ where: { email } });
   }
 
   async generateResetToken(email: string): Promise<string> {
     const user = await this.findByEmail(email);
-    const token = randomBytes(32).toString('hex'); // Generate a unique token
+    // It's better to check for the user here, though AuthService already does.
+    if (!user) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    const token = randomBytes(32).toString('hex');
 
     user.resetToken = token;
     await this.repo.save(user);
@@ -92,19 +92,9 @@ export class UsersService {
   async findByResetToken(token: string): Promise<User | null> {
     return this.repo.findOne({ where: { resetToken: token } });
   }
-  async requestPasswordReset(email: string): Promise<string> {
-    const user = await this.findByEmail(email);
-    const resetToken = await this.generateResetToken(email);
 
-    // Send reset token to user's email
-    await this.emailService.sendEmail(
-      email,
-      'Password Reset Request 🔐',
-      `🚩 Here is your password reset token: ${resetToken}`,
-    );
-
-    return 'Password reset link has been sent to your email.';
-  }
+  // The requestPasswordReset method has been removed, as this logic
+  // is now correctly handled only in AuthService.
 
   async resetPassword(token: string, newPassword: string): Promise<void> {
     const user = await this.findByResetToken(token);
@@ -114,5 +104,4 @@ export class UsersService {
     user.resetToken = null;
     await this.repo.save(user);
   }
-  
 }

@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+// --- Import the new component here ---
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { DemandeurComponent } from './auth/demandeur/demandeur.component';
 import { ProfileComponent } from './auth/demandeur/profile/profile.component';
 import { DraftsComponent } from './auth/demandeur/drafts/drafts.component';
@@ -25,117 +27,122 @@ import { DirectorProjectsComponent } from './auth/directeur/project/director-pro
 import { DirectorSuppliersComponent } from './auth/directeur/suppliers/director-suppliers.component';
 import { DirectorProfileComponent } from './auth/directeur/profile/director-profile.component';
 import { authGuard } from './auth/guards/auth.guard';
-import{DirectorBcListComponent} from './auth/directeur/director-bclist/bclist.component'
+import { DirectorBcListComponent } from './auth/directeur/director-bclist/bclist.component';
+
 export const routes: Routes = [
   {
     path: 'directeur/bclist',
-    component: DirectorBcListComponent
-  },
-  { 
+    component: DirectorBcListComponent,
+  },
+  {
     path: 'directeur',
-    component: DirecteurComponent
+    component: DirecteurComponent,
   },
   {
     path: 'directeur/purchase-requests',
-    component: DirectorPurchaseRequestsComponent
+    component: DirectorPurchaseRequestsComponent,
   },
   {
     path: 'directeur/project-requests',
-    component: DirectorProjectRequestsComponent
+    component: DirectorProjectRequestsComponent,
   },
   {
     path: 'directeur/projects',
-    component: DirectorProjectsComponent
+    component: DirectorProjectsComponent,
   },
   {
     path: 'directeur/suppliers',
-    component: DirectorSuppliersComponent
+    component: DirectorSuppliersComponent,
   },
   {
     path: 'directeur/profile',
-    component: DirectorProfileComponent
+    component: DirectorProfileComponent,
   },
-  { 
-    path: 'login', 
-    component: LoginComponent 
+  {
+    path: 'login',
+    component: LoginComponent,
   },
-  { 
-    path: 'register', 
-    component: RegisterComponent 
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
-  { 
-    path: 'responsable-profile', 
-    component: ResponsableProfileComponent 
+  // --- Add the new route here ---
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
   },
-  { 
+  {
+    path: 'responsable-profile',
+    component: ResponsableProfileComponent,
+  },
+  {
     path: 'demandeur',
-    component: DemandeurComponent
+    component: DemandeurComponent,
   },
-  { 
-    path: 'projectlist', 
-    component: ProjectListComponent 
+  {
+    path: 'projectlist',
+    component: ProjectListComponent,
   },
-  { 
-    path: 'profile', 
-    loadComponent: () => import('./auth/demandeur/profile/profile.component').then(m => m.ProfileComponent)
+  {
+    path: 'profile',
+    loadComponent: () => import('./auth/demandeur/profile/profile.component').then((m) => m.ProfileComponent),
   },
-  
-  { 
-    path: 'drafts', 
-    component: DraftsComponent
+  {
+    path: 'drafts',
+    component: DraftsComponent,
   },
-  { 
-    path: 'bcdrafts', 
-    component: BcDraftsComponent
+  {
+    path: 'bcdrafts',
+    component: BcDraftsComponent,
   },
   {
     path: 'responsable',
-    component: ResponsableComponent
+    component: ResponsableComponent,
   },
-  { 
-    path: 'create-bc', 
-    component: BcComponent 
+  {
+    path: 'create-bc',
+    component: BcComponent,
   },
-  { 
-    path: 'createpro', 
-    component: CreateproComponent 
+  {
+    path: 'createpro',
+    component: CreateproComponent,
   },
   { path: 'add-fournisseur', component: FournisseurComponent },
-  { 
-    path: 'latest-requests', 
-    component: LatestRequestsComponent 
+  {
+    path: 'latest-requests',
+    component: LatestRequestsComponent,
   },
-  { 
-    path: 'purchases', 
-    component: PurchasesComponent 
+  {
+    path: 'purchases',
+    component: PurchasesComponent,
   },
-  { 
-    path: 'bclist', 
-    component: BcListComponent 
+  {
+    path: 'bclist',
+    component: BcListComponent,
   },
-  { 
-    path: 'fournisseurlist', 
-    component: FournisseurListComponent 
+  {
+    path: 'fournisseurlist',
+    component: FournisseurListComponent,
   },
-  { 
-    path: 'create-demande-projet', 
-    component: DemandeProjetComponent 
+  {
+    path: 'create-demande-projet',
+    component: DemandeProjetComponent,
   },
-  { 
-    path: 'demande-projet-drafts', 
-    component: DemandeProjetDraftsComponent 
+  {
+    path: 'demande-projet-drafts',
+    component: DemandeProjetDraftsComponent,
   },
-  { 
-    path: 'demande-projet-list', 
-    component: DemandeProjetListComponent 
+  {
+    path: 'demande-projet-list',
+    component: DemandeProjetListComponent,
   },
-  { 
-    path: '', 
+  {
+    path: '',
     redirectTo: '/login',
-    pathMatch: 'full' 
+    pathMatch: 'full',
   },
-  { 
-    path: '**', 
-    redirectTo: '/login'
-  }
+  {
+    path: '**',
+    redirectTo: '/login',
+  },
 ];

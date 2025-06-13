@@ -1,13 +1,11 @@
 import {
   Controller, Post, Body, Get, Param, Put, Delete,
-  HttpCode, UseGuards, NotFoundException
+  UseGuards, NotFoundException
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.entity';
-import { RequestPasswordResetDto } from './dto/request-password-reset.dto';
-import { ResetPasswordDto } from './dto/reset-password.dto';
 import { Roles } from '../auth/roles.decorator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
@@ -57,20 +55,5 @@ export class UsersController {
   @Roles(enumRole.ResponsableAchat)
   remove(@Param('id') id: number) {
     return this.svc.delete(id);
-  }
-
-  @Post('request-password-reset')
-  @Public()
-  async requestPasswordReset(@Body() body: RequestPasswordResetDto) {
-    const message = await this.svc.requestPasswordReset(body.email);
-    return { message };
-  }
-
-  @Post('reset-password')
-  @HttpCode(200)
-  @Public()
-  async resetPassword(@Body() body: ResetPasswordDto) {
-    await this.svc.resetPassword(body.token, body.newPassword);
-    return { message: 'Password updated successfully' };
   }
 }

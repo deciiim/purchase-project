@@ -1,3 +1,5 @@
+// src/app/auth/services/auth.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -7,7 +9,7 @@ interface JwtPayload {
   sub: number;
   email: string;
   role: string;
-  name: string;  // matches your backend "name"
+  name: string;
   iat: number;
   exp: number;
 }
@@ -31,6 +33,16 @@ export class AuthService {
     );
   }
 
+  // Method to request a password reset
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/auth/forgot-password`, { email });
+  }
+
+  // Method to submit the new password and token
+  resetPassword(token: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/auth/reset-password`, { token, password });
+  }
+
   logout() {
     localStorage.removeItem(this.tokenKey);
     this.router.navigate(['/login']);
@@ -44,13 +56,10 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
-  // Manual JWT decode without jwt-decode package
   private decodeJwt(token: string): any | null {
     try {
       const payloadBase64 = token.split('.')[1];
-      // Fix base64url encoding
       const base64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
-      // Decode base64
       const jsonPayload = decodeURIComponent(
         atob(base64)
           .split('')
@@ -67,14 +76,10 @@ export class AuthService {
   getCurrentUser(): JwtPayload | null {
     const token = this.getToken();
     if (!token) {
-      console.log('No token found in localStorage');
       return null;
     }
-
     const decoded = this.decodeJwt(token);
     if (!decoded) return null;
-
-    console.log('Decoded JWT payload:', decoded);
     return decoded as JwtPayload;
   }
 }

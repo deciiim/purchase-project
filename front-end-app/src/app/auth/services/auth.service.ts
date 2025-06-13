@@ -1,16 +1,20 @@
+// FILE: src/app/auth/services/auth.service.ts
+
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../environments/environment';
-import * as jwt_decode from 'jwt-decode';
-
+import { environment } from '../environments/environment'; // Make sure this path is correct
+import { jwtDecode } from 'jwt-decode'; // <-- 1. UPDATED IMPORT SYNTAX
 import { Observable } from 'rxjs';
 
+// This interface now correctly matches your backend token payload
 interface JwtPayload {
   email?: string;
   role?: string;
-  username?: string;   // Add username here
-  // other fields if needed
+  name?: string; 
+  sub?: number;
+  iat?: number;
+  exp?: number;
 }
 
 @Injectable({
@@ -31,6 +35,14 @@ export class AuthService {
     );
   }
 
+  sendPasswordResetEmail(email: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, password: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/reset-password`, { token, password });
+  }
+
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.router.navigate(['/login']);
@@ -40,29 +52,18 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  // --- THIS METHOD IS NOW FIXED ---
   getCurrentUser(): JwtPayload | null {
     const token = this.getToken();
     if (!token) return null;
   
     try {
-      const decoded = (jwt_decode as any).default(token);
-  
-      return {
-        email: decoded.email || '',
-        role: decoded.role || '',
-        username: decoded.username || decoded.name || decoded.email || ''  // fallback order
-      };
+      // 2. UPDATED to a direct function call, which is the modern way
+      const decoded: JwtPayload = jwtDecode(token);
+      return decoded;
     } catch (error) {
       console.error('Invalid token:', error);
       return null;
     }
-  }
-  
-
-  sendPasswordResetEmail(email: string): Observable<void> {
-    return this.http.post<void>(
-      `${environment.apiUrl}/auth/reset-password`,
-      { email }
-    );
   }
 }
